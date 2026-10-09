@@ -3,10 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="Icon.png">
-    <title>Secondary Gaming - Official</title>
+    <meta name="theme-color" content="#090a0e">
+    <meta name="description" content="Roblox adventures, railway chaos, and more with Secondary Gaming. Catch the latest videos and join the community.">
+    <link rel="icon" href="Icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="tween.js" defer></script>
+    <title>Secondary Gaming — Official</title>
 </head>
-    <body>
-        
-    </body>
+<body>
+    <div class="site-shell">
+        <header class="site-header">
+            <a class="wordmark" href="#home" aria-label="Secondary Gaming home">
+                <img src="Icon.png" alt="" class="wordmark-icon">
+                <span>SECONDARY<span class="wordmark-light"> GAMING</span></span>
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="#videos">Videos</a>
+                <a href="#about">About</a>
+                <a href="#community">Community</a>
+            </nav>
+            <a class="header-cta" href="https://www.youtube.com/@secondary_genuine" target="_blank" rel="noreferrer">
+                <span class="youtube-mark" aria-hidden="true">▶</span> YouTube channel
+                <span class="arrow-up" aria-hidden="true">↗</span>
+            </a>
+        </header>
+
+        <main id="home">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-grid" aria-hidden="true"></div>
+                <div class="hero-copy" data-reveal>
+                    <p class="eyebrow"><span class="eyebrow-dot"></span> ROBLOX, RAILWAYS &amp; GOOD TIMES</p>
+                    <h1 id="hero-title">The next adventure<br>is <span class="gradient-text">just one video</span><br>away.</h1>
+                    <p class="hero-description" data-channel-description>Welcome to Secondary Gaming — home to big Roblox moments, railway deep dives, and the occasional very questionable decision.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="https://www.youtube.com/@secondary_genuine" target="_blank" rel="noreferrer">
+                            <span class="button-play" aria-hidden="true">▶</span> Subscribe on YouTube
+                        </a>
+                        <a class="button button-quiet" href="#videos">Explore videos <span aria-hidden="true">↓</span></a>
+                    </div>
+                    <div class="channel-proof">
+                        <div class="avatar-stack" aria-hidden="true">
+                            <img src="Icon.png" alt="">
+                            <span class="proof-play">▶</span>
+                        </div>
+                        <div>
+                            <strong data-channel-name>Secondary Gaming</strong>
+                            <span>Real videos. Real chaos. All good vibes.</span>
+                        </div>
+                        <span class="verified" title="YouTube channel">✦</span>
+                    </div>
+                </div>
+
+                <div class="hero-art" data-reveal data-reveal-delay="150" aria-label="Secondary Gaming channel artwork">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <div class="hero-glow"></div>
+                    <div class="hero-art-top"><span class="live-dot"></span> NEW ADVENTURES, EVERY UPLOAD</div>
+                    <img class="hero-avatar" src="Icon.png" alt="Secondary Gaming character logo">
+                    <div class="floating-tag tag-roblox" data-float>
+                        <span class="tag-icon tag-blue">R</span>
+                        <span><strong>ROBLOX</strong><small>Let's play</small></span>
+                    </div>
+                    <div class="floating-tag tag-rail" data-float data-float-delay="420">
+                        <span class="tag-icon tag-violet">↗</span>
+                        <span><strong>ALL ABOARD</strong><small>Railway stories</small></span>
+                    </div>
+                    <div class="art-caption"><span class="caption-line"></span><span>YOUR NEXT FAVOURITE CREATOR</span></div>
+                    <span class="sparkle sparkle-one">✦</span>
+                    <span class="sparkle sparkle-two">✧</span>
+                    <span class="sparkle sparkle-three">✦</span>
+                </div>
+                <div class="hero-bottom" aria-hidden="true"><span>SCROLL TO EXPLORE</span><span class="scroll-line"></span></div>
+            </section>
+
+            <section class="stats-strip" id="about" aria-label="Channel overview" data-reveal>
+                <div class="stat-intro">
+                    <span class="stat-label"><span class="stat-pulse"></span> THE CHANNEL AT A GLANCE</span>
+                    <span class="channel-status" id="channel-status" data-state="loading" role="status" aria-live="polite">Loading live channel data…</span>
+                </div>
+                <div class="stat"><strong data-channel-stat="subscribers">—</strong><span>subscribers</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><strong data-channel-stat="videos">—</strong><span>videos</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><strong>100<span>%</span></strong><span>gaming energy</span></div>
+                <a class="stat-link" href="https://www.youtube.com/@secondary_genuine/about" target="_blank" rel="noreferrer">Meet the channel <span aria-hidden="true">↗</span></a>
+            </section>
+
+            <section class="videos-section" id="videos" aria-labelledby="videos-title">
+                <div class="section-heading" data-reveal>
+                    <div>
+                        <p class="eyebrow"><span class="eyebrow-dot"></span> STRAIGHT FROM THE CHANNEL</p>
+                        <h2 id="videos-title">Pick your <span class="gradient-text">next watch.</span></h2>
+                    </div>
+                    <a class="text-link" href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer">All videos <span aria-hidden="true">↗</span></a>
+                </div>
+
+                <article class="featured-video" data-reveal>
+                    <a class="featured-artwork art-castbound" data-featured-link href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer" aria-label="Watch the latest Secondary Gaming videos">
+                        <img class="featured-thumbnail" alt="" hidden>
+                        <span class="art-noise"></span>
+                        <span class="art-chip">LATEST ADVENTURE</span>
+                        <span class="cast-sun"></span>
+                        <span class="cast-rod"></span>
+                        <span class="cast-water"></span>
+                        <span class="cast-fish">✦</span>
+                        <span class="art-title">CASTBOUND<br><b>ROD!</b></span>
+                        <span class="play-button" aria-hidden="true">▶</span>
+                        <span class="art-runtime">NEW VIDEO</span>
+                    </a>
+                    <div class="featured-copy">
+                        <p class="content-kicker"><span class="content-kicker-dot"></span> FEATURED VIDEO</p>
+                        <h3 data-featured-title>Loading latest upload…</h3>
+                        <p data-featured-description>Fetching the latest video from the channel.</p>
+                        <div class="video-meta"><span>ROBLOX GAMEPLAY</span><span class="meta-divider"></span><span>SECONDARY GAMING</span></div>
+                        <a class="button button-outline" data-featured-link href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+                    </div>
+                </article>
+
+                <div class="video-grid">
+                    <a class="video-card" href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer" data-reveal>
+                        <div class="video-art thumb-train">
+                            <img class="live-thumbnail" alt="" loading="lazy" hidden>
+                            <span class="thumb-label">RAILWAY RUN</span>
+                            <span class="train-track"></span><span class="train-body"><i></i><i></i><i></i></span>
+                            <span class="thumb-copy">SCR'S<br><b>DOWNFALL</b></span>
+                            <span class="thumb-play" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="card-title-row"><h3 data-video-title>Loading recent upload…</h3><span class="card-arrow">↗</span></div>
+                        <p class="card-meta" data-video-date>RECENT VIDEO</p>
+                    </a>
+                    <a class="video-card" href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer" data-reveal data-reveal-delay="100">
+                        <div class="video-art thumb-streamline">
+                            <img class="live-thumbnail" alt="" loading="lazy" hidden>
+                            <span class="thumb-label">FIRST TIME PLAYING</span>
+                            <span class="stream-track"></span><span class="stream-train"></span>
+                            <span class="thumb-copy">ROBLOX<br><b>STREAMLINED</b></span>
+                            <span class="thumb-play" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="card-title-row"><h3 data-video-title>Loading recent upload…</h3><span class="card-arrow">↗</span></div>
+                        <p class="card-meta" data-video-date>RECENT VIDEO</p>
+                    </a>
+                    <a class="video-card" href="https://www.youtube.com/@secondary_genuine/videos" target="_blank" rel="noreferrer" data-reveal data-reveal-delay="200">
+                        <div class="video-art thumb-update">
+                            <img class="live-thumbnail" alt="" loading="lazy" hidden>
+                            <span class="thumb-label">BIG UPDATE</span>
+                            <span class="update-train"></span><span class="update-glow"></span>
+                            <span class="thumb-copy">BEST UPDATE<br><b>EVER?!</b></span>
+                            <span class="thumb-play" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="card-title-row"><h3 data-video-title>Loading recent upload…</h3><span class="card-arrow">↗</span></div>
+                        <p class="card-meta" data-video-date>RECENT VIDEO</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="community-banner" id="community" data-reveal>
+                <div class="community-orb" aria-hidden="true"></div>
+                <div class="community-mark"><img src="Icon.png" alt=""></div>
+                <div class="community-copy">
+                    <p class="eyebrow"><span class="eyebrow-dot"></span> YOU'RE INVITED</p>
+                    <h2>Good games are<br><span class="gradient-text">better together.</span></h2>
+                    <p>Come hang out, catch the next upload, and be part of the Secondary Gaming community.</p>
+                </div>
+                <a class="button button-primary community-button" href="https://www.youtube.com/@secondary_genuine" target="_blank" rel="noreferrer">Join on YouTube <span aria-hidden="true">↗</span></a>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <a class="footer-brand" href="#home"><img src="Icon.png" alt=""> SECONDARY GAMING</a>
+            <span>Made for the love of the game.</span>
+            <a href="https://www.youtube.com/@secondary_genuine" target="_blank" rel="noreferrer">YouTube <span aria-hidden="true">↗</span></a>
+            <span class="footer-copy">© <span id="year">2026</span> Secondary Gaming</span>
+        </footer>
+    </div>
+</body>
 </html>
