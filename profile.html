@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="View your Secondary Gaming profile." />
+    <title>Secondary Gaming | Profile</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html">Secondary Gaming<span>.</span></a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="community.html">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html">Login</a>
+            <a class="register-link" href="register.html">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="profile-page">
+      <section class="profile-card" aria-labelledby="profile-title">
+        <div class="profile-avatar" aria-hidden="true">
+          <span class="nav-avatar" id="profile-avatar"></span>
+        </div>
+        <p class="community-eyebrow">PLAYER PROFILE</p>
+        <h1 id="profile-title">Your profile</h1>
+        <p class="profile-intro">Your Secondary Gaming account details.</p>
+        <dl class="profile-details">
+          <div>
+            <dt>Username</dt>
+            <dd id="profile-username"></dd>
+          </div>
+          <div>
+            <dt>Unique ID</dt>
+            <dd id="profile-id"></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd id="profile-email"></dd>
+          </div>
+        </dl>
+        <section class="avatar-picker" aria-labelledby="avatar-picker-title">
+          <h2 id="avatar-picker-title">Profile picture</h2>
+          <p>Choose one of the default profile pictures.</p>
+          <div class="avatar-options" role="group" aria-label="Choose a profile picture">
+            <button class="avatar-option" type="button" data-avatar-id="gamer" aria-label="Gamer profile picture">🎮</button>
+            <button class="avatar-option" type="button" data-avatar-id="wolf" aria-label="Wolf profile picture">🐺</button>
+            <button class="avatar-option" type="button" data-avatar-id="cat" aria-label="Cat profile picture">🐱</button>
+            <button class="avatar-option" type="button" data-avatar-id="fox" aria-label="Fox profile picture">🦊</button>
+            <button class="avatar-option" type="button" data-avatar-id="panda" aria-label="Panda profile picture">🐼</button>
+            <button class="avatar-option" type="button" data-avatar-id="owl" aria-label="Owl profile picture">🦉</button>
+            <button class="avatar-option" type="button" data-avatar-id="rocket" aria-label="Rocket profile picture">🚀</button>
+            <button class="avatar-option" type="button" data-avatar-id="alien" aria-label="Alien profile picture">👾</button>
+          </div>
+          <p class="avatar-save-message" id="avatar-save-message" role="status" aria-live="polite"></p>
+        </section>
+        <p class="local-auth-notice">
+          This profile is stored locally in this browser and is not synced to
+          other devices.
+        </p>
+      </section>
+
+      <aside class="profile-sidebar" aria-labelledby="account-actions-title">
+        <p class="community-eyebrow">ACCOUNT</p>
+        <h2 id="account-actions-title">Account actions</h2>
+        <a class="profile-action admin-action" href="admin.html" hidden>
+          <span>Admin Panel</span><span aria-hidden="true">→</span>
+        </a>
+        <button class="profile-action delete-action" id="delete-account" type="button">
+          <span>Delete account</span><span aria-hidden="true">×</span>
+        </button>
+        <p class="profile-sidebar-note">Deleting your account removes its saved profile from this browser.</p>
+      </aside>
+    </main>
+  </body>
+</html>

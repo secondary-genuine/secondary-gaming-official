@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta
+      name="description"
+      content="Explore Secondary Gaming, watch the channel, and connect with the community."
+    />
+    <title>Secondary Gaming | Home</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <span class="brand" aria-hidden="true">Secondary Gaming<span>.</span></span>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html" aria-current="page">Home</a>
+            <a class="nav-link" href="community.html">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html">Login</a>
+            <a class="register-link" href="register.html">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="home-hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> THE HOME OF SECONDARY GAMING</p>
+          <h1 id="hero-title">Your next<br />gaming <span>session</span><br />starts here.</h1>
+          <p class="hero-description">
+            Step into the world of Secondary Gaming. Catch the videos, join the
+            community, and be part of what happens next.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="https://www.youtube.com/@secondary_genuine"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="play-icon" aria-hidden="true">▶</span>
+              Watch on YouTube
+            </a>
+            <a class="button button-secondary" href="community.html">Join the community <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="hero-note">GOOD GAMES. GOOD PEOPLE. NO COST.</p>
+        </div>
+
+        <section class="channel-card" aria-label="Featured video">
+          <div class="channel-card-top">
+            <span class="channel-mark">Secondary Gaming<span>.</span></span>
+            <span class="card-status"><span></span> FEATURED VIDEO</span>
+          </div>
+          <iframe
+            class="video-player"
+            src="https://www.youtube-nocookie.com/embed/xFGXz86RZFc?rel=0"
+            title="Secondary Gaming featured video"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <div class="channel-card-bottom">
+            <span><span class="card-label">WATCH NOW</span><strong>Recommended For You</strong></span>
+          </div>
+        </section>
+      </section>
+
+      <section class="home-shortcuts" aria-label="Explore Secondary Gaming">
+        <a class="shortcut-card" href="community.html">
+          <span class="shortcut-icon" aria-hidden="true">✳</span>
+          <span><span class="shortcut-label">MEET THE COMMUNITY</span><strong>Play better together.</strong></span>
+          <span class="shortcut-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="shortcut-card" href="socials.html">
+          <span class="shortcut-icon socials-icon" aria-hidden="true">⌁</span>
+          <span><span class="shortcut-label">FOLLOW THE JOURNEY</span><strong>Find Secondary Gaming.</strong></span>
+          <span class="shortcut-arrow" aria-hidden="true">↗</span>
+        </a>
+      </section>
+    </main>
+  </body>
+</html>

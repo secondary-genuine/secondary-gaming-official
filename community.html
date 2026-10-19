@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta
+      name="description"
+      content="Catch community updates, highlights, and news from Secondary Gaming."
+    />
+    <title>Secondary Gaming | Community</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <span class="brand" aria-hidden="true">Secondary Gaming<span>.</span></span>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="community.html" aria-current="page">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html">Login</a>
+            <a class="register-link" href="register.html">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="community-page">
+      <section class="community-hero" aria-labelledby="community-title">
+        <div class="community-hero-copy">
+          <p class="community-eyebrow"><span class="live-dot"></span> SECONDARY GAMING COMMUNITY</p>
+          <h1 id="community-title">Better games.<br /><span>Better together.</span></h1>
+          <p>
+            The community hub for the latest updates, shared highlights, and
+            everything happening around Secondary Gaming.
+          </p>
+          <a class="button button-primary" href="#latest-posts">Explore the latest <span aria-hidden="true">↓</span></a>
+        </div>
+
+        <aside class="discord-card" aria-labelledby="discord-title">
+          <div class="discord-card-heading">
+            <span class="discord-icon" aria-hidden="true">◉</span>
+            <span class="discord-status">COMMUNITY HQ</span>
+          </div>
+          <p class="discord-kicker">THE PARTY IS BETTER TOGETHER</p>
+          <h2 id="discord-title">Your next teammate could be here.</h2>
+          <p class="discord-description">
+            Discord is where the conversation, game nights, and community
+            announcements can all come together.
+          </p>
+          <a
+            class="discord-invite"
+            href="https://discord.gg/ESQD7A7Ch9"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Join the Secondary Gaming Discord server"
+          >
+            <span class="invite-icon" aria-hidden="true">↗</span>
+            <span><strong>Join the Discord server</strong><small>Jump in and meet the community.</small></span>
+          </a>
+          <a class="discord-follow-link" href="socials.html">Keep up with our socials <span aria-hidden="true">→</span></a>
+        </aside>
+      </section>
+
+      <section class="community-feed" id="latest-posts" aria-labelledby="posts-title">
+        <div class="feed-heading">
+          <div>
+            <p class="community-eyebrow">THE COMMUNITY BOARD</p>
+            <h2 id="posts-title">Latest posts</h2>
+          </div>
+          <span class="feed-preview-label"><span></span> COMMUNITY BOARD</span>
+        </div>
+
+        <div class="feed-layout">
+          <div class="feed-main">
+            <div class="post-categories" role="group" aria-label="Filter posts by category">
+              <button class="post-category is-active" type="button" data-category="all" aria-pressed="true">All posts</button>
+              <button class="post-category" type="button" data-category="update" aria-pressed="false">Update</button>
+              <button class="post-category" type="button" data-category="announcement" aria-pressed="false">Announcement</button>
+            </div>
+            <div class="post-list" aria-label="Community posts">
+              <div class="posts-empty" role="status" aria-live="polite">
+                <span class="empty-icon" aria-hidden="true">✦</span>
+                <p class="community-eyebrow">A FRESH START</p>
+                <h3>No posts just yet</h3>
+                <p class="empty-description">There are no posts here yet. Check back soon for updates and announcements.</p>
+                <a class="empty-discord-link" href="https://discord.gg/ESQD7A7Ch9" target="_blank" rel="noopener noreferrer">Join us on Discord <span aria-hidden="true">↗</span></a>
+              </div>
+              <template id="community-post-template">
+                <article class="post-card" data-category="update" data-post-id="">
+                  <div class="post-avatar avatar-blue" aria-hidden="true">SG</div>
+                  <div class="post-content">
+                    <div class="post-meta"><strong>Secondary Gaming</strong></div>
+                    <h3 class="post-title"><span></span><span class="post-category-tag">Update</span></h3>
+                    <p class="post-body"></p>
+                    <div class="post-footer">
+                      <span class="post-date"></span>
+                      <button class="post-like" type="button" aria-pressed="false" aria-label="Like this post">
+                        <span aria-hidden="true">♥</span>
+                        <span class="like-label">Like</span>
+                        <span class="like-count">0</span>
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </template>
+            </div>
+          </div>
+
+          <aside class="feed-sidebar">
+            <section class="sidebar-card" aria-labelledby="feed-status-title">
+              <p class="community-eyebrow">COMMUNITY POSTS</p>
+              <h2 id="feed-status-title">Stay in the loop.</h2>
+              <p>
+                Browse community updates and announcements here, or join the
+                Discord to keep the conversation going.
+              </p>
+              <span class="setup-badge"><span></span> UPDATES &amp; ANNOUNCEMENTS</span>
+            </section>
+            <section class="sidebar-card sidebar-links" aria-labelledby="stay-connected-title">
+              <p class="community-eyebrow">STAY IN THE LOOP</p>
+              <h2 id="stay-connected-title">Find us around the web.</h2>
+              <a href="https://www.youtube.com/@secondary_genuine" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>
+              <a href="socials.html">All socials <span aria-hidden="true">→</span></a>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

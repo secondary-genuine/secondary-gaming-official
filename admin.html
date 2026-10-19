@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Secondary Gaming administrator panel." />
+    <title>Secondary Gaming | Admin Panel</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html">Secondary Gaming<span>.</span></a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="community.html">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html">Login</a>
+            <a class="register-link" href="register.html">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="auth-page">
+      <section class="admin-card" aria-labelledby="admin-title">
+        <p class="community-eyebrow">RESTRICTED AREA · SG-1</p>
+        <h1 id="admin-title">Admin Panel</h1>
+        <p class="profile-intro">Website moderation commands for accounts saved in this browser.</p>
+        <div class="admin-notice">
+          <span class="admin-status-dot" aria-hidden="true"></span>
+          <span>Signed in as <strong id="admin-username"></strong></span>
+        </div>
+
+        <section class="admin-command-section" aria-labelledby="website-moderation-title">
+          <p class="community-eyebrow">WEBSITE MODERATION</p>
+          <h2 id="website-moderation-title">Account commands</h2>
+          <div class="admin-command-grid">
+            <button class="admin-command" type="button" data-command="create-post">
+              <span><strong>Create Post</strong><small>Publish an Update or Announcement to the community board.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button class="admin-command" type="button" data-command="account-status">
+              <span><strong>Enable / Disable Account</strong><small>Change an account’s ability to log in.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button class="admin-command danger-command" type="button" data-command="delete-account">
+              <span><strong>Delete Account</strong><small>Permanently remove an account from this browser.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button class="admin-command" type="button" data-command="moderator-role">
+              <span><strong>Grant / Revoke Moderator</strong><small>Change the account’s local moderator role.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="admin-accounts-section" aria-labelledby="local-accounts-title">
+          <div class="admin-section-heading">
+            <div>
+              <p class="community-eyebrow">THIS BROWSER ONLY</p>
+              <h2 id="local-accounts-title">Local accounts</h2>
+            </div>
+            <button class="admin-refresh" id="refresh-accounts" type="button">Refresh</button>
+          </div>
+          <div class="admin-account-list" id="admin-account-list" aria-live="polite"></div>
+        </section>
+
+        <a class="button button-secondary" href="profile.html">Back to profile <span aria-hidden="true">→</span></a>
+        <p class="local-auth-notice">
+          Commands only affect local profiles stored in this browser. This
+          prototype is not a server-secured moderation system.
+        </p>
+      </section>
+    </main>
+
+    <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-dialog-title">
+      <form class="command-dialog-content" id="command-form">
+        <p class="community-eyebrow">WEBSITE MODERATION</p>
+        <h2 id="command-dialog-title">Account command</h2>
+        <p class="command-dialog-description" id="command-dialog-description"></p>
+        <label for="command-account-id" id="command-account-label">Target account ID</label>
+        <input
+          id="command-account-id"
+          name="accountId"
+          type="text"
+          list="account-id-list"
+          pattern="SG-[0-9]+"
+          placeholder="SG-2"
+          autocomplete="off"
+          required
+        />
+        <datalist id="account-id-list"></datalist>
+        <div class="command-extra-field" id="command-extra-field"></div>
+        <p class="command-dialog-message" id="command-dialog-message" role="status" aria-live="polite"></p>
+        <div class="command-dialog-actions">
+          <button class="command-cancel" id="command-cancel" type="button">Cancel</button>
+          <button class="button button-primary command-submit" id="command-submit" type="submit">Execute command</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Create your Secondary Gaming community profile." />
+    <title>Secondary Gaming | Register</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html">Secondary Gaming<span>.</span></a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="community.html">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html">Login</a>
+            <a class="register-link" href="register.html" aria-current="page">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="auth-page">
+      <section class="auth-card" aria-labelledby="register-title">
+        <span class="auth-mark" aria-hidden="true">SG<span>.</span></span>
+        <p class="community-eyebrow">JOIN THE COMMUNITY</p>
+        <h1 id="register-title">Make it official.</h1>
+        <p class="auth-intro">Create a local Secondary Gaming profile.</p>
+
+        <form class="auth-form" id="register-form">
+          <label for="register-username">Username</label>
+          <input
+            id="register-username"
+            name="username"
+            type="text"
+            autocomplete="username"
+            required
+          />
+
+          <label for="register-password">Password</label>
+          <input
+            id="register-password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            required
+          />
+
+          <label for="register-confirm-password">Confirm Password</label>
+          <input
+            id="register-confirm-password"
+            name="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            required
+          />
+
+          <label for="register-email">Email</label>
+          <input
+            id="register-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          />
+
+          <label for="register-pin">PIN Code</label>
+          <input
+            id="register-pin"
+            name="pin"
+            type="password"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            minlength="4"
+            maxlength="4"
+            autocomplete="off"
+            aria-describedby="register-pin-hint"
+            required
+          />
+          <small class="field-hint" id="register-pin-hint">Choose a 4-digit PIN.</small>
+
+          <p class="auth-message" id="register-message" role="status" aria-live="polite"></p>
+          <button class="button button-primary auth-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
+        </form>
+
+        <p class="auth-switch">Already have a profile? <a href="login.html">Log in</a></p>
+        <p class="local-auth-notice">Prototype accounts are saved only in this browser. This is not secure authentication and does not sync across devices.</p>
+      </section>
+    </main>
+  </body>
+</html>

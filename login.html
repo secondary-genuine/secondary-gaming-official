@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Log in to your Secondary Gaming community profile." />
+    <title>Secondary Gaming | Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="index.html">Secondary Gaming<span>.</span></a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="primary-navigation">
+          <div class="nav-links">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="community.html">Community</a>
+            <a class="nav-link" href="socials.html">Socials</a>
+          </div>
+          <div class="nav-actions">
+            <a class="nav-link login-link" href="login.html" aria-current="page">Login</a>
+            <a class="register-link" href="register.html">Register</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="auth-page">
+      <section class="auth-card" aria-labelledby="login-title">
+        <span class="auth-mark" aria-hidden="true">SG<span>.</span></span>
+        <p class="community-eyebrow">GOOD TO HAVE YOU BACK</p>
+        <h1 id="login-title">Welcome back.</h1>
+        <p class="auth-intro">Log in to your Secondary Gaming profile.</p>
+
+        <form class="auth-form" id="login-form">
+          <label for="login-identifier">Username / E-mail</label>
+          <input
+            id="login-identifier"
+            name="identifier"
+            type="text"
+            autocomplete="username"
+            required
+          />
+
+          <label for="login-password">Password</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+
+          <label for="login-pin">PIN Code</label>
+          <input
+            id="login-pin"
+            name="pin"
+            type="password"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            minlength="4"
+            maxlength="4"
+            autocomplete="off"
+            aria-describedby="pin-hint"
+            required
+          />
+          <small class="field-hint" id="pin-hint">Enter your 4-digit PIN.</small>
+
+          <p class="auth-message" id="login-message" role="status" aria-live="polite"></p>
+          <button class="button button-primary auth-submit" type="submit">Log in <span aria-hidden="true">→</span></button>
+        </form>
+
+        <p class="auth-switch">New around here? <a href="register.html">Create an account</a></p>
+        <p class="local-auth-notice">Prototype accounts are saved only in this browser. This is not secure authentication and does not sync across devices.</p>
+      </section>
+    </main>
+  </body>
+</html>
