@@ -899,6 +899,14 @@ body {
   font-weight: 800;
 }
 
+.post-avatar.has-picture {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(226 232 240 / 25%);
+  border-radius: 50%;
+  font-size: 1.15rem;
+}
+
 .avatar-blue {
   background: linear-gradient(145deg, #2563eb, #172554);
 }

@@ -50,10 +50,18 @@
 
         <section class="admin-command-section" aria-labelledby="website-moderation-title">
           <p class="community-eyebrow">WEBSITE MODERATION</p>
-          <h2 id="website-moderation-title">Account commands</h2>
+          <h2 id="website-moderation-title">Moderation commands</h2>
           <div class="admin-command-grid">
             <button class="admin-command" type="button" data-command="create-post">
               <span><strong>Create Post</strong><small>Publish an Update or Announcement to the community board.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button class="admin-command danger-command" type="button" data-command="delete-post">
+              <span><strong>Delete Post</strong><small>Remove a post from the community board.</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button class="admin-command" type="button" data-command="edit-post">
+              <span><strong>Edit Post</strong><small>Update a post’s title, category, or content.</small></span>
               <span aria-hidden="true">→</span>
             </button>
             <button class="admin-command" type="button" data-command="account-status">
@@ -93,7 +101,7 @@
     <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-dialog-title">
       <form class="command-dialog-content" id="command-form">
         <p class="community-eyebrow">WEBSITE MODERATION</p>
-        <h2 id="command-dialog-title">Account command</h2>
+        <h2 id="command-dialog-title">Moderation command</h2>
         <p class="command-dialog-description" id="command-dialog-description"></p>
         <label for="command-account-id" id="command-account-label">Target account ID</label>
         <input

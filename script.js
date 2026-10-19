@@ -44,7 +44,10 @@ const readCommunityPosts = () => {
         !POST_CATEGORIES.includes(post.category) ||
         typeof post.body !== "string" ||
         typeof post.createdAt !== "string" ||
-        typeof post.likes !== "number",
+        typeof post.likes !== "number" ||
+        (post.authorUsername !== undefined && typeof post.authorUsername !== "string") ||
+        (post.authorAvatarId !== undefined &&
+          (typeof post.authorAvatarId !== "string" || !Object.hasOwn(AVATAR_CHOICES, post.authorAvatarId))),
     )
   ) {
     throw new Error("Saved community posts are invalid. Clear this site's post data to start over.");
@@ -168,6 +171,8 @@ if (postList instanceof HTMLElement) {
         const categoryTag = fragment.querySelector(".post-category-tag");
         const body = fragment.querySelector(".post-body");
         const date = fragment.querySelector(".post-date");
+        const avatar = fragment.querySelector(".post-avatar");
+        const authorName = fragment.querySelector(".post-meta strong");
         const likeButton = fragment.querySelector(".post-like");
         const likeCount = fragment.querySelector(".like-count");
         const likeLabel = fragment.querySelector(".like-label");
@@ -178,6 +183,8 @@ if (postList instanceof HTMLElement) {
           !(categoryTag instanceof HTMLElement) ||
           !(body instanceof HTMLElement) ||
           !(date instanceof HTMLElement) ||
+          !(avatar instanceof HTMLElement) ||
+          !(authorName instanceof HTMLElement) ||
           !(likeButton instanceof HTMLButtonElement) ||
           !(likeCount instanceof HTMLElement) ||
           !(likeLabel instanceof HTMLElement)
@@ -187,8 +194,16 @@ if (postList instanceof HTMLElement) {
 
         const categoryLabel = post.category === "announcement" ? "Announcement" : "Update";
         const liked = likedPostIds.includes(post.id);
+        const authorAvatarId = post.authorAvatarId && Object.hasOwn(AVATAR_CHOICES, post.authorAvatarId)
+          ? post.authorAvatarId
+          : undefined;
         card.dataset.postId = post.id;
         card.dataset.category = post.category;
+        authorName.textContent = post.authorUsername || "Secondary Gaming";
+        if (authorAvatarId) {
+          avatar.className = `post-avatar has-picture avatar-tone-${authorAvatarId}`;
+          avatar.textContent = AVATAR_CHOICES[authorAvatarId].emoji;
+        }
         title.textContent = post.title;
         categoryTag.textContent = categoryLabel;
         body.textContent = post.body;
@@ -579,6 +594,18 @@ if (adminPage instanceof HTMLElement) {
     });
   };
 
+  const refreshAdminPosts = () => {
+    try {
+      return readCommunityPosts();
+    } catch (error) {
+      console.error("Could not load community posts for moderation.", error);
+      showCommandMessage(
+        error instanceof Error ? error.message : "Could not load community posts.",
+      );
+      return null;
+    }
+  };
+
   const showCommandMessage = (message, success = false) => {
     if (commandMessage instanceof HTMLElement) {
       commandMessage.textContent = message;
@@ -603,17 +630,25 @@ if (adminPage instanceof HTMLElement) {
     commandExtraField.replaceChildren();
     commandAccountInput.value = "";
     showCommandMessage("");
-    commandSubmit.classList.toggle("is-danger", command === "delete-account");
-    commandSubmit.textContent = command === "delete-account" ? "Delete account" : "Execute command";
+    commandSubmit.disabled = false;
+    const deleting = command === "delete-account" || command === "delete-post";
+    commandSubmit.classList.toggle("is-danger", deleting);
+    commandSubmit.textContent = deleting
+      ? command === "delete-post" ? "Delete post" : "Delete account"
+      : "Execute command";
 
     const heading = {
       "create-post": "Create Community Post",
+      "delete-post": "Delete Community Post",
+      "edit-post": "Edit Community Post",
       "account-status": "Enable / Disable Account",
       "delete-account": "Delete Account",
       "moderator-role": "Grant / Revoke Moderator",
     }[command];
     const description = {
       "create-post": "Write a post for the community board and choose its category.",
+      "delete-post": "Choose a community post and type DELETE to confirm its removal.",
+      "edit-post": "Choose a community post and update its title, category, or content.",
       "account-status": "Enter the target account ID and choose whether to enable or disable its login.",
       "delete-account": "Enter the account ID to permanently remove it from this browser.",
       "moderator-role": "Enter the target account ID and choose whether to grant or revoke moderator status.",
@@ -621,55 +656,129 @@ if (adminPage instanceof HTMLElement) {
     commandTitle.textContent = heading;
     commandDescription.textContent = description;
     const createPost = command === "create-post";
-    commandAccountInput.required = !createPost;
-    commandAccountInput.hidden = createPost;
-    commandAccountLabel.hidden = createPost;
-    const accountDatalist = document.querySelector("#account-id-list");
+    const postCommand = command === "delete-post" || command === "edit-post";
+    commandAccountInput.required = !createPost && !postCommand;
+    commandAccountInput.hidden = createPost || postCommand;
+    commandAccountLabel.hidden = createPost || postCommand;
     if (accountDatalist instanceof HTMLDataListElement) {
-      accountDatalist.hidden = createPost;
+      accountDatalist.hidden = createPost || postCommand;
     }
 
-    if (createPost) {
-      const titleLabel = document.createElement("label");
-      titleLabel.htmlFor = "post-title-input";
-      titleLabel.textContent = "Post title";
-      const titleInput = document.createElement("input");
-      titleInput.id = "post-title-input";
-      titleInput.name = "postTitle";
-      titleInput.type = "text";
-      titleInput.maxLength = 100;
-      titleInput.autocomplete = "off";
-      titleInput.required = true;
-      titleInput.placeholder = "Give your post a title";
+    if (createPost || postCommand) {
+      let postSelect;
+      let titleInput;
+      let categorySelect;
+      let bodyInput;
 
-      const categoryLabel = document.createElement("label");
-      categoryLabel.htmlFor = "post-category-input";
-      categoryLabel.textContent = "Category";
-      const categorySelect = document.createElement("select");
-      categorySelect.id = "post-category-input";
-      categorySelect.name = "postCategory";
-      categorySelect.required = true;
-      [
-        ["update", "Update"],
-        ["announcement", "Announcement"],
-      ].forEach(([value, text]) => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = text;
-        categorySelect.append(option);
-      });
+      if (postCommand) {
+        const posts = refreshAdminPosts();
+        const postLabel = document.createElement("label");
+        postLabel.htmlFor = "command-post-id";
+        postLabel.textContent = "Community post";
+        postSelect = document.createElement("select");
+        postSelect.id = "command-post-id";
+        postSelect.name = "postId";
+        postSelect.required = true;
+        if (posts) {
+          posts.forEach((post) => {
+            const option = document.createElement("option");
+            option.value = post.id;
+            option.textContent = `${post.title} · ${post.category} · ${post.id.slice(0, 8)}`;
+            postSelect.append(option);
+          });
+        }
+        if (!posts || posts.length === 0) {
+          const option = document.createElement("option");
+          option.value = "";
+          option.textContent = posts ? "No community posts available" : "Community posts could not be loaded";
+          option.disabled = true;
+          option.selected = true;
+          postSelect.append(option);
+          postSelect.disabled = true;
+          commandSubmit.disabled = true;
+          if (posts) {
+            showCommandMessage("Create a post before using this command.");
+          }
+        }
+        commandExtraField.append(postLabel, postSelect);
 
-      const bodyLabel = document.createElement("label");
-      bodyLabel.htmlFor = "post-body-input";
-      bodyLabel.textContent = "Post content";
-      const bodyInput = document.createElement("textarea");
-      bodyInput.id = "post-body-input";
-      bodyInput.name = "postBody";
-      bodyInput.maxLength = 2000;
-      bodyInput.rows = 6;
-      bodyInput.required = true;
-      bodyInput.placeholder = "Write the post message";
-      commandExtraField.append(titleLabel, titleInput, categoryLabel, categorySelect, bodyLabel, bodyInput);
+        if (command === "delete-post") {
+          const confirmationLabel = document.createElement("label");
+          confirmationLabel.htmlFor = "command-confirmation";
+          confirmationLabel.textContent = "Type DELETE to confirm";
+          const confirmationInput = document.createElement("input");
+          confirmationInput.id = "command-confirmation";
+          confirmationInput.name = "confirmation";
+          confirmationInput.type = "text";
+          confirmationInput.autocomplete = "off";
+          confirmationInput.required = true;
+          confirmationInput.pattern = "DELETE";
+          confirmationInput.title = "Enter DELETE exactly to confirm.";
+          commandExtraField.append(confirmationLabel, confirmationInput);
+        }
+      }
+
+      if (createPost || command === "edit-post") {
+        const titleLabel = document.createElement("label");
+        titleLabel.htmlFor = "post-title-input";
+        titleLabel.textContent = "Post title";
+        titleInput = document.createElement("input");
+        titleInput.id = "post-title-input";
+        titleInput.name = "postTitle";
+        titleInput.type = "text";
+        titleInput.maxLength = 100;
+        titleInput.autocomplete = "off";
+        titleInput.required = true;
+        titleInput.placeholder = "Give your post a title";
+
+        const categoryLabel = document.createElement("label");
+        categoryLabel.htmlFor = "post-category-input";
+        categoryLabel.textContent = "Category";
+        categorySelect = document.createElement("select");
+        categorySelect.id = "post-category-input";
+        categorySelect.name = "postCategory";
+        categorySelect.required = true;
+        [
+          ["update", "Update"],
+          ["announcement", "Announcement"],
+        ].forEach(([value, text]) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = text;
+          categorySelect.append(option);
+        });
+
+        const bodyLabel = document.createElement("label");
+        bodyLabel.htmlFor = "post-body-input";
+        bodyLabel.textContent = "Post content";
+        bodyInput = document.createElement("textarea");
+        bodyInput.id = "post-body-input";
+        bodyInput.name = "postBody";
+        bodyInput.maxLength = 2000;
+        bodyInput.rows = 6;
+        bodyInput.required = true;
+        bodyInput.placeholder = "Write the post message";
+        commandExtraField.append(titleLabel, titleInput, categoryLabel, categorySelect, bodyLabel, bodyInput);
+      }
+
+      if (command === "edit-post" && postSelect instanceof HTMLSelectElement) {
+        const updatePostFields = () => {
+          const posts = refreshAdminPosts();
+          const post = posts?.find((savedPost) => savedPost.id === postSelect.value);
+          if (
+            post &&
+            titleInput instanceof HTMLInputElement &&
+            categorySelect instanceof HTMLSelectElement &&
+            bodyInput instanceof HTMLTextAreaElement
+          ) {
+            titleInput.value = post.title;
+            categorySelect.value = post.category;
+            bodyInput.value = post.body;
+          }
+        };
+        postSelect.addEventListener("change", updatePostFields);
+        updatePostFields();
+      }
     } else if (command !== "delete-account") {
       const label = document.createElement("label");
       label.htmlFor = "command-action";
@@ -708,9 +817,16 @@ if (adminPage instanceof HTMLElement) {
       commandExtraField.append(label, input);
     }
 
-    refreshAdminAccounts();
+    if (!postCommand) {
+      refreshAdminAccounts();
+    }
     commandDialog.showModal();
-    commandAccountInput.focus();
+    const firstInput = commandExtraField.querySelector("input, select, textarea");
+    if (firstInput instanceof HTMLElement && !firstInput.hasAttribute("disabled")) {
+      firstInput.focus();
+    } else if (!commandAccountInput.hidden) {
+      commandAccountInput.focus();
+    }
   };
 
   refreshAdminAccounts();
@@ -768,9 +884,52 @@ if (adminPage instanceof HTMLElement) {
             body,
             createdAt: new Date().toISOString(),
             likes: 0,
+            authorUsername: admin.username,
+            authorAvatarId: admin.avatarId ?? "gamer",
           });
           localStorage.setItem(COMMUNITY_POSTS_STORAGE_KEY, JSON.stringify(posts));
           showCommandMessage(`“${title}” was published to the Community page.`, true);
+          commandForm.reset();
+          return;
+        }
+
+        if (activeCommand === "delete-post" || activeCommand === "edit-post") {
+          const postId = String(formData.get("postId") ?? "");
+          const posts = readCommunityPosts();
+          const post = posts.find((savedPost) => savedPost.id === postId);
+          if (!post) {
+            showCommandMessage("That community post no longer exists. Reopen the command and try again.");
+            return;
+          }
+
+          if (activeCommand === "delete-post") {
+            if (formData.get("confirmation") !== "DELETE") {
+              showCommandMessage("Type DELETE exactly to confirm post removal.");
+              return;
+            }
+            const likedPostIds = readLikedPostIds().filter((likedId) => likedId !== postId);
+            localStorage.setItem(
+              COMMUNITY_POSTS_STORAGE_KEY,
+              JSON.stringify(posts.filter((savedPost) => savedPost.id !== postId)),
+            );
+            localStorage.setItem(POST_LIKES_STORAGE_KEY, JSON.stringify(likedPostIds));
+            showCommandMessage(`“${post.title}” was deleted from the Community page.`, true);
+            commandForm.reset();
+            return;
+          }
+
+          const title = String(formData.get("postTitle") ?? "").trim();
+          const category = String(formData.get("postCategory") ?? "");
+          const body = String(formData.get("postBody") ?? "").trim();
+          if (!title || !body || !POST_CATEGORIES.includes(category)) {
+            showCommandMessage("Enter a title, post content, and a valid category.");
+            return;
+          }
+          post.title = title;
+          post.category = category;
+          post.body = body;
+          localStorage.setItem(COMMUNITY_POSTS_STORAGE_KEY, JSON.stringify(posts));
+          showCommandMessage(`“${title}” was updated on the Community page.`, true);
           commandForm.reset();
           return;
         }
