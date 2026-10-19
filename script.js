@@ -39,26 +39,17 @@ if (recommendedVideoList instanceof HTMLElement && recommendedVideoStatus instan
       throw new Error("A YouTube recommendation has invalid video details.");
     }
 
-    const link = document.createElement("a");
-    link.className = "recommended-video-card";
-    link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}`;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.setAttribute("aria-label", `Watch ${video.title} on YouTube`);
-
-    const thumbnail = document.createElement("span");
-    thumbnail.className = "recommended-video-thumbnail";
-    const image = document.createElement("img");
-    image.src = `https://i.ytimg.com/vi/${encodeURIComponent(video.id)}/hqdefault.jpg`;
-    image.alt = "";
-    image.loading = "lazy";
-    image.width = 480;
-    image.height = 360;
-    const playIcon = document.createElement("span");
-    playIcon.className = "recommended-play-icon";
-    playIcon.setAttribute("aria-hidden", "true");
-    playIcon.textContent = "▶";
-    thumbnail.append(image, playIcon);
+    const card = document.createElement("article");
+    card.className = "recommended-video-card";
+    const player = document.createElement("iframe");
+    player.className = "recommended-video-embed";
+    player.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.id)}?rel=0`;
+    player.title = `YouTube video: ${video.title}`;
+    player.loading = "lazy";
+    player.referrerPolicy = "strict-origin-when-cross-origin";
+    player.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    player.allowFullscreen = true;
 
     const title = document.createElement("strong");
     title.className = "recommended-video-title";
@@ -67,8 +58,8 @@ if (recommendedVideoList instanceof HTMLElement && recommendedVideoStatus instan
     const date = document.createElement("span");
     date.className = "recommended-video-date";
     date.textContent = formatVideoDate(video.publishedAt);
-    link.append(thumbnail, title, date);
-    return link;
+    card.append(player, title, date);
+    return card;
   };
 
   const loadRecommendedVideos = async () => {
@@ -314,15 +305,9 @@ if (postList instanceof HTMLElement) {
         authorName.textContent = post.authorUsername || "Secondary Gaming";
         if (post.category === "announcement") {
           avatar.className = "post-avatar post-announcement-avatar";
-          const announcementIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-          announcementIcon.setAttribute("viewBox", "0 0 24 24");
+          const announcementIcon = document.createElement("i");
+          announcementIcon.className = "fa-solid fa-bullhorn";
           announcementIcon.setAttribute("aria-hidden", "true");
-          const iconShape = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          iconShape.setAttribute(
-            "d",
-            "M3 10v4h3l4 3V7l-4 3H3Zm9-5v14l9-3.8V8.8L12 5Zm-6.5 9H5l1.8 4.2H9L7 14Z",
-          );
-          announcementIcon.append(iconShape);
           avatar.replaceChildren(announcementIcon);
         } else if (authorAvatarId) {
           avatar.className = `post-avatar has-picture avatar-tone-${authorAvatarId}`;
