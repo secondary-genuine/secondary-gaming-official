@@ -17,6 +17,118 @@ const AVATAR_CHOICES = {
   alien: { emoji: "👾", label: "Alien" },
 };
 
+const recommendedVideoList = document.querySelector("#recommended-channel-list");
+const recommendedVideoStatus = document.querySelector("#recommended-status");
+
+if (recommendedVideoList instanceof HTMLElement && recommendedVideoStatus instanceof HTMLElement) {
+  const formatVideoDate = (publishedAt) => {
+    const date = new Date(publishedAt);
+    if (Number.isNaN(date.getTime())) {
+      return "Recently uploaded";
+    }
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
+  };
+
+  const createVideoCard = (video) => {
+    if (
+      typeof video.id !== "string" ||
+      !/^[A-Za-z0-9_-]{11}$/.test(video.id) ||
+      typeof video.title !== "string" ||
+      typeof video.publishedAt !== "string"
+    ) {
+      throw new Error("A YouTube recommendation has invalid video details.");
+    }
+
+    const link = document.createElement("a");
+    link.className = "recommended-video-card";
+    link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", `Watch ${video.title} on YouTube`);
+
+    const thumbnail = document.createElement("span");
+    thumbnail.className = "recommended-video-thumbnail";
+    const image = document.createElement("img");
+    image.src = `https://i.ytimg.com/vi/${encodeURIComponent(video.id)}/hqdefault.jpg`;
+    image.alt = "";
+    image.loading = "lazy";
+    image.width = 480;
+    image.height = 360;
+    const playIcon = document.createElement("span");
+    playIcon.className = "recommended-play-icon";
+    playIcon.setAttribute("aria-hidden", "true");
+    playIcon.textContent = "▶";
+    thumbnail.append(image, playIcon);
+
+    const title = document.createElement("strong");
+    title.className = "recommended-video-title";
+    title.textContent = video.title;
+
+    const date = document.createElement("span");
+    date.className = "recommended-video-date";
+    date.textContent = formatVideoDate(video.publishedAt);
+    link.append(thumbnail, title, date);
+    return link;
+  };
+
+  const loadRecommendedVideos = async () => {
+    try {
+      const response = await fetch("/api/recommended-videos");
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("The recommendations API is unavailable on this site.");
+      }
+      if (!response.ok || !Array.isArray(result.channels)) {
+        const message =
+          typeof result.error === "string"
+            ? result.error
+            : "Could not load YouTube recommendations.";
+        throw new Error(message);
+      }
+
+      const videosByHandle = new Map(
+        result.channels.map((channel) => [channel.handle, channel.videos]),
+      );
+      recommendedVideoList.querySelectorAll(".recommended-video-row").forEach((row) => {
+        const handle = row.dataset.handle;
+        const videos = videosByHandle.get(handle);
+        if (!Array.isArray(videos)) {
+          throw new Error(`Recommendations for @${handle} are missing.`);
+        }
+
+        const cards = videos.slice(0, 4).map(createVideoCard);
+        if (cards.length === 0) {
+          const empty = document.createElement("p");
+          empty.className = "recommended-row-empty";
+          empty.textContent = "No recent public uploads are available yet.";
+          row.replaceChildren(empty);
+        } else {
+          row.replaceChildren(...cards);
+        }
+      });
+      recommendedVideoStatus.textContent = "The latest public videos and Shorts from each channel.";
+      recommendedVideoStatus.classList.remove("is-error");
+    } catch (error) {
+      console.error("Could not load YouTube recommendations.", error);
+      recommendedVideoStatus.textContent =
+        error instanceof Error
+          ? error.message
+          : "Could not load YouTube recommendations. Try again later.";
+      recommendedVideoStatus.classList.add("is-error");
+      recommendedVideoList.querySelectorAll(".recommended-video-row").forEach((row) => {
+        const message = document.createElement("p");
+        message.className = "recommended-row-empty";
+        message.textContent = "Videos are temporarily unavailable.";
+        row.replaceChildren(message);
+      });
+    }
+  };
+
+  loadRecommendedVideos();
+}
+
 const setProfilePicture = (element, avatarId) => {
   if (!(element instanceof HTMLElement)) {
     return;
@@ -200,7 +312,19 @@ if (postList instanceof HTMLElement) {
         card.dataset.postId = post.id;
         card.dataset.category = post.category;
         authorName.textContent = post.authorUsername || "Secondary Gaming";
-        if (authorAvatarId) {
+        if (post.category === "announcement") {
+          avatar.className = "post-avatar post-announcement-avatar";
+          const announcementIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          announcementIcon.setAttribute("viewBox", "0 0 24 24");
+          announcementIcon.setAttribute("aria-hidden", "true");
+          const iconShape = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          iconShape.setAttribute(
+            "d",
+            "M3 10v4h3l4 3V7l-4 3H3Zm9-5v14l9-3.8V8.8L12 5Zm-6.5 9H5l1.8 4.2H9L7 14Z",
+          );
+          announcementIcon.append(iconShape);
+          avatar.replaceChildren(announcementIcon);
+        } else if (authorAvatarId) {
           avatar.className = `post-avatar has-picture avatar-tone-${authorAvatarId}`;
           avatar.textContent = AVATAR_CHOICES[authorAvatarId].emoji;
         }
